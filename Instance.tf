@@ -29,3 +29,12 @@ resource "aws_instance" "web" {
     ]
   }
 }
+output "instance_public_ip" {
+  value = "You can access your website at http://${aws_instance.web.public_ip}"
+}
+
+resource "null_resource" "output_ip" {
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.web.public_ip} > output.txt"
+  }
+}
